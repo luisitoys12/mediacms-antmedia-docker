@@ -1,9 +1,3 @@
-# mediacms-antmedia-docker
-# mediacms-antmedia-docker
-# mediacms-antmedia-docker
-# mediacms-antmedia-docker
-# mediacms-antmedia-docker
-# mediacms-antmedia-docker
 # MediaCMS + AntMedia Docker
 
 Este proyecto integra [MediaCMS](https://github.com/mediacms-io/mediacms) y [Ant Media Server Community Edition](https://github.com/ant-media/Ant-Media-Server) usando Docker.
