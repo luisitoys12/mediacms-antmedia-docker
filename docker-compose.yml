@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:13
+    container_name: mediacms_db
+    restart: always
+    environment:
+      POSTGRES_DB: mediacms
+      POSTGRES_USER: mediacms
+      POSTGRES_PASSWORD: mediacms123
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  mediacms:
+    image: mediacms/mediacms:latest
+    container_name: mediacms
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+      - DJANGO_SUPERUSER_PASSWORD=admin123
+      - DATABASE_URL=postgres://mediacms:mediacms123@db:5432/mediacms
+    volumes:
+      - ./mediacms_data:/data
+
+  antmedia:
+    build:
+      context: ./antmedia
+      dockerfile: Dockerfile
+    container_name: antmedia
+    restart: unless-stopped
+    ports:
+      - "5080:5080"
+      - "1935:1935"
+      - "5443:5443"
+    volumes:
+      - ./antmedia_data:/usr/local/antmedia
+    environment:
+      - JAVA_OPTS=-Xms512M -Xmx2048M
+    shm_size: "2gb"
+
+volumes:
+  db_data:
